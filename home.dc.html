@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>One-Stop Ethiopia–UAE Digital Gateway</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="gateway-images.js"></script>
+<style>
+body{margin:0;background:#fffdf8}
+</style>
+<template id="__bundler_thumbnail">
+  <svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="tg" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#061c33"></stop>
+        <stop offset="0.55" stop-color="#0b2a49"></stop>
+        <stop offset="1" stop-color="#0f3a2c"></stop>
+      </linearGradient>
+    </defs>
+    <rect width="240" height="240" fill="url(#tg)"></rect>
+    <circle cx="84" cy="120" r="17" fill="none" stroke="#d7a62a" stroke-width="6"></circle>
+    <circle cx="156" cy="120" r="17" fill="none" stroke="#2a966c" stroke-width="6"></circle>
+    <rect x="98" y="117" width="44" height="6" fill="#ffffff"></rect>
+  </svg>
+</template>
+</helmet>
+<div style="min-height:100vh">
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <dc-import name="homepage" hint-size="100%,100vh"></dc-import>
+  </sc-if>
+  <sc-if value="{{ isDirectory }}" hint-placeholder-val="{{ false }}">
+    <dc-import name="business-directory" hint-size="100%,100vh"></dc-import>
+  </sc-if>
+  <sc-if value="{{ isTrip }}" hint-placeholder-val="{{ false }}">
+    <dc-import name="trip-planner" hint-size="100%,100vh"></dc-import>
+  </sc-if>
+  <sc-if value="{{ isRegister }}" hint-placeholder-val="{{ false }}">
+    <dc-import name="business-registration" hint-size="100%,100vh"></dc-import>
+  </sc-if>
+  <sc-if value="{{ isSignIn }}" hint-placeholder-val="{{ false }}">
+    <dc-import name="sign-in" hint-size="100%,100vh"></dc-import>
+  </sc-if>
+  <sc-if value="{{ isAccount }}" hint-placeholder-val="{{ false }}">
+    <dc-import name="user-dashboard" hint-size="100%,100vh"></dc-import>
+  </sc-if>
+  <sc-if value="{{ isBusiness }}" hint-placeholder-val="{{ false }}">
+    <dc-import name="business-dashboard" hint-size="100%,100vh"></dc-import>
+  </sc-if>
+  <sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}">
+    <dc-import name="admin-dashboard" hint-size="100%,100vh"></dc-import>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+// The whole Gateway runs inside this one file, so navigation never leaves the
+// application. The screens themselves are untouched: they still link to each
+// other with ordinary <a href="Page.dc.html"> anchors, and the listener below
+// turns those clicks into a screen change instead of a document load.
+
+const ROUTES = {
+  'home': 'home',
+  'homepage': 'home',
+  'gateway shell - phase 1 step 2': 'home',
+  'business-directory': 'directory',
+  'trip-planner': 'trip',
+  'business-registration': 'register',
+  'sign-in': 'signin',
+  'user-dashboard': 'account',
+  'business-dashboard': 'business',
+  'admin-dashboard': 'admin'
+};
+
+class Component extends DCLogic {
+  state = { screen: 'home' };
+
+  componentDidMount() {
+    this.onClick = (e) => {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey) return;
+      const a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+      if (!a) return;
+      const raw = a.getAttribute('href') || '';
+      if (!/\.dc\.html/i.test(raw)) return;
+      e.preventDefault();
+      const file = decodeURIComponent(raw.split('#')[0].split('?')[0].split('/').pop())
+        .replace(/\.dc\.html$/i, '').trim().toLowerCase();
+      const screen = ROUTES[file];
+      if (!screen) return;
+      if (screen !== this.state.screen) this.setState({ screen });
+      window.scrollTo(0, 0);
+    };
+    // Capture phase, so a screen's own handler cannot swallow the click first.
+    document.addEventListener('click', this.onClick, true);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.onClick, true);
+  }
+
+  renderVals() {
+    const s = this.state.screen;
+    return {
+      isHome: s === 'home', isDirectory: s === 'directory', isTrip: s === 'trip',
+      isRegister: s === 'register', isSignIn: s === 'signin',
+      isAccount: s === 'account', isBusiness: s === 'business', isAdmin: s === 'admin'
+    };
+  }
+}
+</script>
+</body>
+</html>

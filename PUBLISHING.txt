@@ -1,0 +1,55 @@
+ONE-STOP ETHIOPIA-UAE DIGITAL GATEWAY - HOW TO PUBLISH
+======================================================
+
+WHAT TO UPLOAD
+--------------
+Upload the ENTIRE contents of this dist/ folder to your web host, keeping all
+files in the same directory (no subfolders). index.html must sit at the root of
+the published folder.
+
+Files (12):
+  index.html                                  <- the site entry point
+  Home.dc.html                                <- same file, kept for internal links
+  support.js                                  <- application runtime
+  gateway-images.js                           <- image fallbacks
+  Homepage.dc.html
+  Business Directory.dc.html
+  Trip Planner.dc.html
+  Business Registration.dc.html
+  Sign in and Registration - Screens.dc.html
+  User Dashboard.dc.html
+  Business Dashboard.dc.html
+  Admin Dashboard.dc.html
+
+Works as-is on Netlify (drag the folder onto the deploy box), Vercel, GitHub
+Pages, Cloudflare Pages, cPanel / public_html, or any static host.
+
+REQUIREMENTS ON THE HOST
+------------------------
+1. Serve over http:// or https:// - not by double-clicking the file. The app
+   loads its screens as separate files, which browsers block on file:// URLs.
+2. Do not enable a Content-Security-Policy that blocks inline scripts.
+3. Keep the file names exactly as they are, spaces included.
+
+"THIS PAGE REQUIRES JAVASCRIPT TO DISPLAY"
+------------------------------------------
+That message is the site's own no-JavaScript notice. It appears only when the
+browser is not running the page's JavaScript at all - which happens when the
+HTML file is shown inside a document PREVIEW rather than being opened as a web
+page. Google Drive preview, WhatsApp and Telegram document preview, Gmail
+attachment preview, Dropbox preview, Slack file preview and most webmail
+viewers all strip scripts for security.
+
+Chrome and mobile browsers run the site normally. To confirm: open the
+published https:// URL directly in the browser's address bar, or in Drive use
+Download first and then open the downloaded file.
+
+SUPABASE
+--------
+The site reads live data from the existing gateway-dev project
+(pkkghdlqliiyhtwirwmn.supabase.co) using the publishable key only. No secret or
+service-role key is present in any file here. Nothing needs to be configured on
+the host - the connection details travel with the application.
+
+Verified from the served build: 24 businesses, 18 destinations, 48 attractions,
+72 services, 12 categories, and attraction photos from Supabase Storage.
