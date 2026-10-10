@@ -3,23 +3,28 @@ ONE-STOP ETHIOPIA-UAE DIGITAL GATEWAY - HOW TO PUBLISH
 
 WHAT TO UPLOAD
 --------------
-Upload the ENTIRE contents of this dist/ folder to your web host, keeping all
-files in the same directory (no subfolders). index.html must sit at the root of
+Upload the ENTIRE contents of this dist/ folder to your web host, keeping the
+folder structure exactly as it is. index.html must sit at the root of
 the published folder.
 
-Files (12):
-  index.html                                  <- the site entry point
-  Home.dc.html                                <- same file, kept for internal links
-  support.js                                  <- application runtime
-  gateway-images.js                           <- image fallbacks
-  Homepage.dc.html
-  Business Directory.dc.html
-  Trip Planner.dc.html
-  Business Registration.dc.html
-  Sign in and Registration - Screens.dc.html
-  User Dashboard.dc.html
-  Business Dashboard.dc.html
-  Admin Dashboard.dc.html
+Files:
+  index.html                     <- the site entry point
+  home.dc.html                   <- same file, kept for internal links
+  support.js                     <- application runtime
+  gateway-images.js              <- image fallbacks
+  gateway-role.js                <- header: sign in/out, bell, admin link
+  gateway-slides.js              <- photo slideshows
+  gateway-cards.js               <- directory card motion
+  gateway-terms.js               <- Terms & Privacy text
+  gateway-engagement.js          <- My Account activity
+  trip-budget.js                 <- trip cost estimator
+  img/   img/slides/   attractions/   <- photos (keep these folders)
+  homepage.dc.html  business-directory.dc.html  trip-planner.dc.html
+  business-registration.dc.html  sign-in.dc.html  user-dashboard.dc.html
+  business-dashboard.dc.html  admin-dashboard.dc.html  terms-and-privacy.dc.html
+
+Seven slideshow photos load from Wikimedia Commons until local copies are
+added to img/slides/ (names in img/slides/CREDITS.txt).
 
 Works as-is on Netlify (drag the folder onto the deploy box), Vercel, GitHub
 Pages, Cloudflare Pages, cPanel / public_html, or any static host.
@@ -29,7 +34,7 @@ REQUIREMENTS ON THE HOST
 1. Serve over http:// or https:// - not by double-clicking the file. The app
    loads its screens as separate files, which browsers block on file:// URLs.
 2. Do not enable a Content-Security-Policy that blocks inline scripts.
-3. Keep the file names exactly as they are, spaces included.
+3. Keep the file and folder names exactly as they are.
 
 "THIS PAGE REQUIRES JAVASCRIPT TO DISPLAY"
 ------------------------------------------
@@ -50,6 +55,3 @@ The site reads live data from the existing gateway-dev project
 (pkkghdlqliiyhtwirwmn.supabase.co) using the publishable key only. No secret or
 service-role key is present in any file here. Nothing needs to be configured on
 the host - the connection details travel with the application.
-
-Verified from the served build: 24 businesses, 18 destinations, 48 attractions,
-72 services, 12 categories, and attraction photos from Supabase Storage.

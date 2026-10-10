@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=Noto+Sans+Ethiopic:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="./gateway-terms.js"></script>
+<style>
+body{margin:0;background:#fffdf8}
+a{color:#137a54;text-decoration:none}
+a:hover{color:#0d5a3e;text-decoration:underline}
+</style>
+</helmet>
+<div dir="{{ dir }}" style="font-family:{{ font }};color:#17212b;line-height:1.65;min-height:100vh">
+  <header style="background:#fffdf8;border-bottom:1px solid #e3e7e3">
+    <div style="width:min(860px,calc(100% - 32px));margin:0 auto;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:14px 0">
+      <a href="home.dc.html" style="display:flex;align-items:center;gap:10px;color:#071d35;font-weight:700;min-height:44px">
+        <img src="img/asset-1.png" alt="" style="width:38px;height:38px;object-fit:contain;border-radius:8px">
+        <span>{{ t.home }}</span>
+      </a>
+      <div style="display:flex;gap:2px;background:#f1f3ee;border:1px solid #e3e7e3;border-radius:999px;padding:3px">
+        <sc-for list="{{ langs }}" as="l" hint-placeholder-count="3">
+          <button onClick="{{ l.pick }}" style="border:0;background:{{ l.bg }};color:{{ l.color }};font-size:13px;font-weight:700;padding:6px 12px;min-height:38px;border-radius:999px;cursor:pointer;font-family:inherit">{{ l.short }}</button>
+        </sc-for>
+      </div>
+    </div>
+  </header>
+  <main style="width:min(860px,calc(100% - 32px));margin:0 auto;padding:28px 0 56px">
+    <h1 style="font-family:{{ headFont }};font-size:clamp(26px,4vw,36px);line-height:1.15;color:#071d35;margin:0 0 14px">{{ c.title }}</h1>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">
+      <sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="2">
+        <button onClick="{{ tb.pick }}" style="border:1px solid {{ tb.border }};background:{{ tb.bg }};color:{{ tb.color }};font-size:14px;font-weight:600;padding:10px 16px;min-height:44px;border-radius:10px;cursor:pointer;font-family:inherit">{{ tb.label }}</button>
+      </sc-for>
+    </div>
+    <sc-if value="{{ notCredits }}" hint-placeholder-val="{{ true }}">
+    <div style="font-size:13px;color:#697581;margin-bottom:10px">{{ versionText }}</div>
+    <div style="border:1px solid #efdca9;background:#fffaef;border-radius:12px;padding:12px 15px;font-size:13.5px;color:#6a5010;margin-bottom:22px">{{ c.draft }}</div>
+    </sc-if>
+    <sc-if value="{{ isCredits }}" hint-placeholder-val="{{ false }}">
+      <p style="margin:0 0 16px;font-size:15px;color:#3d4a56;text-wrap:pretty">{{ creditsIntro }}</p>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <sc-for list="{{ credits }}" as="cr" hint-placeholder-count="7">
+          <div style="border:1px solid #e3e7e3;background:#fff;border-radius:12px;padding:12px 15px;display:flex;flex-direction:column;gap:3px">
+            <span style="font-size:15px;font-weight:700;color:#071d35">{{ cr.title }}</span>
+            <span dir="ltr" style="font-size:14px;color:#3d4a56">{{ cr.author }} · {{ cr.licence }}</span>
+            <a href="{{ cr.url }}" target="_blank" rel="noopener" dir="ltr" style="font-size:13.5px;word-break:break-all;min-height:32px;display:inline-flex;align-items:center">{{ cr.urlLabel }}</a>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+    <div style="display:{{ termsDisplay }};flex-direction:column;gap:18px">
+      <sc-for list="{{ sections }}" as="sec" hint-placeholder-count="6">
+        <section>
+          <h2 style="font-size:17px;font-weight:700;color:#071d35;margin:0 0 4px">{{ sec.n }}. {{ sec.h }}</h2>
+          <p style="margin:0;font-size:15px;color:#3d4a56;text-wrap:pretty">{{ sec.p }}</p>
+        </section>
+      </sc-for>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const FONTS = {
+  en: { body:"'IBM Plex Sans', system-ui, sans-serif", head:"'Source Serif 4', Georgia, serif" },
+  am: { body:"'Noto Sans Ethiopic', 'IBM Plex Sans', sans-serif", head:"'Noto Sans Ethiopic', serif" },
+  ar: { body:"'IBM Plex Sans Arabic', system-ui, sans-serif", head:"'IBM Plex Sans Arabic', serif" }
+};
+const HOME = { en:'Home', am:'መነሻ', ar:'الرئيسية' };
+// Slideshow photo credits. Licence = as stated on each Wikimedia Commons file page.
+const CREDIT_TXT = {
+  en: { tab:'Photo credits', intro:'Some slideshow photos are by these photographers, used under the Creative Commons licence shown. Other photos belong to the Gateway or to the businesses listed.', view:'View source and licence' },
+  am: { tab:'የፎቶ ምስጋና', intro:'አንዳንድ የስላይድ ትዕይንት ፎቶዎች በእነዚህ ፎቶግራፍ አንሺዎች የተነሱ ሲሆኑ በተጠቀሰው የክሪኤቲቭ ኮመንስ ፈቃድ ጥቅም ላይ ውለዋል። ሌሎች ፎቶዎች የመግቢያው ወይም የተዘረዘሩት ንግዶች ናቸው።', view:'ምንጩንና ፈቃዱን ይመልከቱ' },
+  ar: { tab:'حقوق الصور', intro:'بعض صور العرض من تصوير هؤلاء المصورين، وتُستخدم بموجب رخصة المشاع الإبداعي المذكورة. أما الصور الأخرى فتعود إلى البوابة أو إلى الشركات المدرجة.', view:'عرض المصدر والرخصة' }
+};
+const CREDITS = [
+  ['Burj Khalifa and the Dubai skyline', 'Imran Shahabuddin', 'CC BY 2.0', 'Burj_Khalifa_(worlds_tallest_building)_and_the_Dubai_skyline_(25781049892).jpg'],
+  ['Dubai Skyline mit Burj Khalifa', 'Tim Reckmann', 'CC BY 2.0', 'Dubai_Skyline_mit_Burj_Khalifa_(18241030269).jpg'],
+  ['Dubai Marina Skyline', 'Norlando Pobre', 'CC BY 2.0', 'Dubai_Marina_Skyline.jpg'],
+  ['Bete Giyorgis, Lalibela', 'Hulivili', 'CC BY 2.0', 'Bete_Giyorgis_Lalibela.jpg'],
+  ['Coffee ceremony of Ethiopia and Eritrea 4', 'ProtoplasmaKid', 'CC BY-SA 4.0', 'Coffee_ceremony_of_Ethiopia_and_Eritrea_4.jpg'],
+  ['Spice Souq Dubai 10', 'Syedphotography', 'CC BY-SA 4.0', 'Spice_Souq_Dubai_10.jpg'],
+  ['Downtown Dubai, Burj Khalifa', 'Andrew Moore', 'CC BY-SA 2.0', 'Downtown_Dubai.Burj_Khalifa.jpg']
+];
+
+class Component extends DCLogic {
+  state = { lang:'en', tab:'terms', ready:!!window.GW_TERMS };
+
+  componentDidMount() {
+    try { const l = localStorage.getItem('gateway.lang'); if (l) this.setState({ lang:l }); } catch (e) {}
+    if (/privacy/i.test(location.hash)) this.setState({ tab:'privacy' });
+    if (/credits/i.test(location.hash)) this.setState({ tab:'credits' });
+    let tries = 0;
+    const wait = () => { if (window.GW_TERMS) this.setState({ ready:true }); else if (tries++ < 100) setTimeout(wait, 100); };
+    wait();
+  }
+
+  renderVals() {
+    const s = this.state, G = window.GW_TERMS || { en:{ terms:[], privacy:[] } };
+    const c = G[s.lang] || G.en, font = FONTS[s.lang] || FONTS.en;
+    const list = (s.tab === 'privacy' ? c.privacy : c.terms) || [];
+    const ver = s.tab === 'privacy' ? G.privacyVersion : G.termsVersion;
+    return {
+      c, dir: s.lang === 'ar' ? 'rtl' : 'ltr', font:font.body, headFont:font.head,
+      t:{ home: HOME[s.lang] || HOME.en },
+      versionText: (c.updated || '').replace('{v}', ver || ''),
+      sections: list.map((x, i) => ({ n:i + 1, h:x[0], p:x[1] })),
+      isCredits: s.tab === 'credits', notCredits: s.tab !== 'credits', termsDisplay: s.tab === 'credits' ? 'none' : 'flex',
+      creditsIntro: (CREDIT_TXT[s.lang] || CREDIT_TXT.en).intro,
+      credits: CREDITS.map(([title, author, licence, file]) => ({ title, author, licence,
+        url: 'https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(file).replace(/%2C/g, ','),
+        urlLabel: (CREDIT_TXT[s.lang] || CREDIT_TXT.en).view })),
+      tabs: [['terms', c.termsTab], ['privacy', c.privacyTab], ['credits', (CREDIT_TXT[s.lang] || CREDIT_TXT.en).tab]].map(([id, label]) => ({ label,
+        bg: s.tab === id ? '#071d35' : '#fff', color: s.tab === id ? '#fff' : '#17212b', border: s.tab === id ? '#071d35' : '#d7dcd6',
+        pick: () => this.setState({ tab:id }) })),
+      langs: [['en','EN'],['am','አማ'],['ar','عر']].map(([id, short]) => ({ short,
+        bg: s.lang === id ? '#fff' : 'transparent', color: s.lang === id ? '#137a54' : '#4c5a68',
+        pick: () => { try { localStorage.setItem('gateway.lang', id); } catch (e) {} this.setState({ lang:id }); } }))
+    };
+  }
+}
+</script>
+</body>
+</html>

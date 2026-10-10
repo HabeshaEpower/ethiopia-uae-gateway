@@ -1,0 +1,23 @@
+Slideshow photos. Licences checked on each Wikimedia Commons file page.
+Keep this attribution visible on the site (e.g. footer or About page).
+
+To store a photo locally, download it from its page ("Download" > 1600px or larger)
+and save it in img/slides/ with the exact file name below. The slideshow uses the
+local file automatically; until then it falls back to the Commons link.
+
+burj-khalifa-skyline.jpg — "Burj Khalifa (worlds tallest building) and the Dubai skyline" — Imran Shahabuddin — CC BY 2.0
+  https://commons.wikimedia.org/wiki/File:Burj_Khalifa_(worlds_tallest_building)_and_the_Dubai_skyline_(25781049892).jpg
+burj-khalifa.jpg — "Dubai Skyline mit Burj Khalifa" — Tim Reckmann — CC BY 2.0
+  https://commons.wikimedia.org/wiki/File:Dubai_Skyline_mit_Burj_Khalifa_(18241030269).jpg
+dubai-marina.jpg — "Dubai Marina Skyline" — Norlando Pobre — CC BY 2.0
+  https://commons.wikimedia.org/wiki/File:Dubai_Marina_Skyline.jpg
+lalibela.jpg — "Bete Giyorgis Lalibela" — Hulivili — CC BY 2.0
+  https://commons.wikimedia.org/wiki/File:Bete_Giyorgis_Lalibela.jpg
+coffee-ceremony.jpg — "Coffee ceremony of Ethiopia and Eritrea 4" — ProtoplasmaKid — CC BY-SA 4.0
+  https://commons.wikimedia.org/wiki/File:Coffee_ceremony_of_Ethiopia_and_Eritrea_4.jpg
+spice-souk.jpg — "Spice Souq Dubai 10" — Syedphotography — CC BY-SA 4.0
+  https://commons.wikimedia.org/wiki/File:Spice_Souq_Dubai_10.jpg
+downtown-dubai.jpg — "Downtown Dubai.Burj Khalifa" — Andrew Moore — CC BY-SA 2.0
+  https://commons.wikimedia.org/wiki/File:Downtown_Dubai.Burj_Khalifa.jpg
+
+Removed: Simien Mountains National Park 02 (Bernard Gagnon) — licence could not be confirmed.

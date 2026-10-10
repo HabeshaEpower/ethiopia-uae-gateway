@@ -56,6 +56,9 @@ body{margin:0;background:#fffdf8}
   <sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}">
     <dc-import name="admin-dashboard" hint-size="100%,100vh"></dc-import>
   </sc-if>
+  <sc-if value="{{ isTerms }}" hint-placeholder-val="{{ false }}">
+    <dc-import name="terms-and-privacy" hint-size="100%,100vh"></dc-import>
+  </sc-if>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script>
@@ -74,11 +77,12 @@ const ROUTES = {
   'sign-in': 'signin',
   'user-dashboard': 'account',
   'business-dashboard': 'business',
-  'admin-dashboard': 'admin'
+  'admin-dashboard': 'admin',
+  'terms-and-privacy': 'terms'
 };
 
 class Component extends DCLogic {
-  state = { screen: 'home' };
+  state = { screen: (/[?&]trip=/.test(location.search) || location.hash === '#trip') ? 'trip' : 'home' };
 
   componentDidMount() {
     this.onClick = (e) => {
@@ -86,14 +90,26 @@ class Component extends DCLogic {
       const a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
       if (!a) return;
       const raw = a.getAttribute('href') || '';
-      if (!/\.dc\.html/i.test(raw)) return;
+      if (!/\.dc\.html/i.test(raw) || a.target === '_blank') return;
       e.preventDefault();
       const file = decodeURIComponent(raw.split('#')[0].split('?')[0].split('/').pop())
         .replace(/\.dc\.html$/i, '').trim().toLowerCase();
       const screen = ROUTES[file];
       if (!screen) return;
+      const frag = raw.split('#')[1];
+      try { history.replaceState(null, '', frag ? '#' + frag : location.pathname + location.search); } catch (x) {}
       if (screen !== this.state.screen) this.setState({ screen });
       window.scrollTo(0, 0);
+      // Tell the screen which section was asked for, then scroll to it once it renders.
+      if (frag) {
+        setTimeout(() => window.dispatchEvent(new CustomEvent('gw-section', { detail:{ id:frag } })), 0);
+        // Screens that handle gw-section do their own scrolling once loaded.
+        if (frag !== 'enquiries') { let tries = 0;
+          const go = () => { const el = document.getElementById(frag);
+            if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior:'smooth' });
+            else if (tries++ < 40) setTimeout(go, 150); };
+          setTimeout(go, 150); }
+      }
     };
     // Capture phase, so a screen's own handler cannot swallow the click first.
     document.addEventListener('click', this.onClick, true);
@@ -108,7 +124,7 @@ class Component extends DCLogic {
     return {
       isHome: s === 'home', isDirectory: s === 'directory', isTrip: s === 'trip',
       isRegister: s === 'register', isSignIn: s === 'signin',
-      isAccount: s === 'account', isBusiness: s === 'business', isAdmin: s === 'admin'
+      isAccount: s === 'account', isBusiness: s === 'business', isAdmin: s === 'admin', isTerms: s === 'terms'
     };
   }
 }
