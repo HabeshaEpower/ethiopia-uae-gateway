@@ -268,7 +268,23 @@ a:hover{color:#0d5a3e}
               <div style="font-size:12.5px;color:#697581;line-height:1.5">{{ t.estimateNote }}</div>
             </div>
           </sc-if>
+          <div style="background:#fff;border:1px solid #e3e7e3;border-radius:18px;padding:18px 20px;display:flex;flex-direction:column;gap:10px">
+            <div style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#697581">{{ recsTitle }}</div>
+            <sc-if value="{{ hasRecs }}" hint-placeholder-val="{{ false }}">
+              <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:10px">
+                <sc-for list="{{ recs }}" as="rc" hint-placeholder-count="2">
+                  <a href="{{ rc.href }}" style="display:flex;flex-direction:column;gap:3px;border:1px solid #e3e7e3;border-radius:12px;padding:12px 14px;min-height:44px;color:#17212b;text-decoration:none">
+                    <span style="font-size:15px;font-weight:700;color:#071d35">{{ rc.name }}</span>
+                    <span style="font-size:12.5px;color:#697581">{{ rc.category }} · {{ rc.badge }}</span>
+                    <span style="font-size:13px;font-weight:600;color:#137a54">{{ t.viewListing }}</span>
+                  </a>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ noRecs }}" hint-placeholder-val="{{ false }}"><div style="font-size:13.5px;color:#5f6b76">{{ t.noRecs }}</div></sc-if>
+          </div>
           <div style="font-size:13px;color:#6a5010;background:#fffaef;border:1px solid #efdca9;border-radius:12px;padding:11px 15px;line-height:1.5">{{ hoursNote }}</div>
+          <sc-if value="{{ routeNote }}" hint-placeholder-val="{{ false }}"><div style="font-size:12px;color:#697581">{{ routeNote }}</div></sc-if>
           <sc-for list="{{ plan.days }}" as="day" hint-placeholder-count="3">
             <div style="background:#fffdf8;border:1px solid #e3e7e3;border-radius:18px;overflow:hidden">
               <button onClick="{{ day.toggle }}" aria-expanded="{{ day.open }}" style="width:100%;border:0;font-family:inherit;text-align:start;cursor:pointer;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;padding:15px 20px;min-height:56px;background:#f7f8f3;border-bottom:1px solid #eceee8">
@@ -454,7 +470,7 @@ const T = {
     day:'Day {n}',
     MORNING:'Morning', MIDDAY:'Midday', AFTERNOON:'Afternoon', EVENING:'Evening', NIGHT:'Night',
     kindAttraction:'See', kindActivity:'Do', kindRestaurant:'Eat', kindTransport:'Travel', kindStay:'Stay',
-    inDirectory:'In the Directory', viewListing:'View the directory listing',
+    recsTitle:'Registered businesses in {city}', noRecs:'No matching businesses are registered here yet. The plan uses general places only.', roadFrom:'≈ {km} km, about {min} min by road (estimate)', routeNote:'Road estimates: © OpenStreetMap contributors, routing by OSRM. Real travel times vary.', inDirectory:'In the Directory', viewListing:'View the directory listing',
     cEthiopian:'Ethiopian', cCoffee:'Coffee', cFish:'Fish', cHarari:'Harari',
     cEmirati:'Emirati', cLevantine:'Levantine', cGrill:'Grill', cSeafood:'Seafood',
     hourUnit:'h', listComma:', ',
@@ -516,7 +532,7 @@ const T = {
     day:'ቀን {n}',
     MORNING:'ጠዋት', MIDDAY:'እኩለ ቀን', AFTERNOON:'ከሰዓት', EVENING:'ምሽት', NIGHT:'ሌሊት',
     kindAttraction:'ይመልከቱ', kindActivity:'ያድርጉ', kindRestaurant:'ይመገቡ', kindTransport:'ይጓዙ', kindStay:'ያድሩ',
-    inDirectory:'በማውጫው ውስጥ', viewListing:'የማውጫውን ዝርዝር ይመልከቱ',
+    recsTitle:'በ{city} የተመዘገቡ ንግዶች', noRecs:'እዚህ እስካሁን የሚስማማ የተመዘገበ ንግድ የለም። ዕቅዱ አጠቃላይ ቦታዎችን ብቻ ይጠቀማል።', roadFrom:'≈ {km} ኪ.ሜ፣ በመንገድ {min} ደቂቃ ያህል (ግምት)', routeNote:'የመንገድ ግምቶች፦ © OpenStreetMap አበርካቾች፣ መንገድ በOSRM። እውነተኛ የጉዞ ጊዜ ይለያያል።', inDirectory:'በማውጫው ውስጥ', viewListing:'የማውጫውን ዝርዝር ይመልከቱ',
     cEthiopian:'ኢትዮጵያዊ', cCoffee:'ቡና', cFish:'ዓሣ', cHarari:'ሐረሪ',
     cEmirati:'ኤምሬታዊ', cLevantine:'ሌቫንታዊ', cGrill:'ጥብስ', cSeafood:'የባሕር ምግብ',
     hourUnit:'ሰ', listComma:'፣ ',
@@ -578,7 +594,7 @@ const T = {
     day:'اليوم {n}',
     MORNING:'الصباح', MIDDAY:'الظهيرة', AFTERNOON:'بعد الظهر', EVENING:'المساء', NIGHT:'الليل',
     kindAttraction:'مشاهدة', kindActivity:'نشاط', kindRestaurant:'طعام', kindTransport:'تنقّل', kindStay:'إقامة',
-    inDirectory:'في الدليل', viewListing:'اعرض إدراج الدليل',
+    recsTitle:'شركات مسجلة في {city}', noRecs:'لا توجد شركات مسجلة مطابقة هنا بعد. تستخدم الخطة أماكن عامة فقط.', roadFrom:'≈ {km} كم، نحو {min} دقيقة بالطريق (تقدير)', routeNote:'تقديرات الطرق: © مساهمو OpenStreetMap، والتوجيه عبر OSRM. أوقات السفر الفعلية تختلف.', inDirectory:'في الدليل', viewListing:'اعرض إدراج الدليل',
     cEthiopian:'إثيوبي', cCoffee:'قهوة', cFish:'أسماك', cHarari:'هرري',
     cEmirati:'إماراتي', cLevantine:'شامي', cGrill:'مشاوي', cSeafood:'مأكولات بحرية',
     hourUnit:'س', listComma:'، ',
@@ -792,7 +808,7 @@ class Component extends DCLogic {
       const saved = localStorage.getItem('gateway.lang');
       if (saved && T[saved] && saved !== this.state.lang) this.setState({ lang:saved });
       const draft = localStorage.getItem('gateway.tripDraft');
-      if (draft) this.setState({ f: { ...this.state.f, ...JSON.parse(draft) } });
+      if (draft) { const d = JSON.parse(draft); const { _seed, _show, ...f } = d; this.setState({ f: { ...this.state.f, ...f }, ...(_seed ? { seed:_seed } : {}) }); this._reopenDraft = !!_show; }
     } catch (e) {}
     this.connect();
     const waitTB = (n) => { if (window.TripBudget) return this.setState({ tbReady:true }); if (n < 100) setTimeout(() => waitTB(n + 1), 100); };
@@ -884,6 +900,8 @@ class Component extends DCLogic {
       businesses:biz.data || [], cats:cats.data || [], tr, images,
       loading:false, loadError: !!dests.error
     });
+    // A guest who generated a plan and then signed in gets the same plan back.
+    if (this._reopenDraft && this.state.f.destination && !this.state.plan && !/[?&]trip=/.test(location.search)) { this._reopenDraft = false; setTimeout(() => this.generate(), 0); }
     if (!dests.error) this.openSharedFromUrl();
   }
 
@@ -997,7 +1015,7 @@ class Component extends DCLogic {
         const km = this.km(a1, nextA);
         if (len(a1) + len(ac) + len(nextA) <= 480 && (km == null || km <= 40)) a2 = take('attrs');
       }
-      if (a2) blocks.push({ kind:'attraction', row:a2, time:'AFTERNOON', hopKm:this.km(a1, a2) });
+      if (a2) blocks.push({ kind:'attraction', row:a2, time:'AFTERNOON', hopKm:this.km(a1, a2), prevRow:a1 });
       const e2 = take('eats'); if (e2) blocks.push({ kind:'restaurant', row:e2, time:'EVENING' });
       const times = ['MORNING','MIDDAY','AFTERNOON','AFTERNOON','EVENING','NIGHT'];
       blocks.forEach((b, i) => { if (!b.time) b.time = times[Math.min(i, times.length - 1)]; });
@@ -1048,12 +1066,37 @@ class Component extends DCLogic {
     if (!this.state.f.destination) return this.setState({ formErrorKey:'errDest' });
     const built = this.build(this.state.seed);
     if (!built) return this.setState({ formErrorKey:'errNoContent' });
+    try { localStorage.setItem('gateway.tripDraft', JSON.stringify({ ...this.state.f, _seed:this.state.seed, _show:true })); } catch (e) {}
+    this.fetchRoutes(built);
     this.setState({ plan:built, screen:'plan', formErrorKey:'', noticeKey:'', shareCopied:false, openDays:{}, planSaved:false });
   };
+
+  // Free road estimates from the public OSRM server. Optional: on any failure
+  // the plan keeps its straight-line distance.
+  fetchRoutes(plan) {
+    if (!plan || typeof fetch !== 'function') return;
+    const legs = [];
+    plan.days.forEach(d => d.blocks.forEach(b => { const a = b.prevRow, c = b.row;
+      if (a && c && a.latitude != null && c.latitude != null && a.longitude != null && c.longitude != null) legs.push([a, c]); }));
+    legs.slice(0, 12).forEach(([a, c]) => {
+      const key = a.id + '>' + c.id;
+      if (this._routes && key in this._routes) return;
+      (this._routes = this._routes || {})[key] = null;
+      const ctl = window.AbortController ? new AbortController() : null;
+      const tm = setTimeout(() => ctl && ctl.abort(), 6000);
+      fetch('https://router.project-osrm.org/route/v1/driving/' + a.longitude + ',' + a.latitude + ';' + c.longitude + ',' + c.latitude + '?overview=false', ctl ? { signal:ctl.signal } : {})
+        .then(r => r.ok ? r.json() : null)
+        .then(j => { clearTimeout(tm); const r = j && j.code === 'Ok' && j.routes && j.routes[0];
+          if (r) { this._routes[key] = { km:r.distance / 1000, min:Math.round(r.duration / 60) }; this.forceUpdate(); } })
+        .catch(() => clearTimeout(tm));
+    });
+  }
 
   regenerate = () => {
     const seed = this.state.seed + 1;
     const built = this.build(seed);
+    try { localStorage.setItem('gateway.tripDraft', JSON.stringify({ ...this.state.f, _seed:seed, _show:true })); } catch (e) {}
+    if (built) this.fetchRoutes(built);
     this.setState({ seed, plan: built || this.state.plan, noticeKey:'', shareCopied:false, planSaved:false });
   };
 
@@ -1165,6 +1208,7 @@ class Component extends DCLogic {
   // real result and always leave the link visible to copy by hand.
   copyNow(url) {
     if (!url) { this.logShare(url, 'none', false); return this.setState({ shareCopied:false, noticeKey:'shareFailed' }); }
+    if (navigator.share && /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) { try { navigator.share({ title:document.title, url }).catch(() => {}); } catch (e) {} }
     if (this.copySync(url)) return this.setState({ shareUrl:url, shareCopied:true, noticeKey:'shareNotice' });
     this.setState({ shareUrl:url, shareCopied:false, noticeKey:'copyFailed' });
     this.copyAsync(url).then(ok => { if (ok) this.setState({ shareCopied:true, noticeKey:'shareNotice' }); });
@@ -1246,7 +1290,7 @@ class Component extends DCLogic {
     const start = row.start_date ? new Date(row.start_date) : null;
     const dayList = Object.keys(byDay).map(Number).sort((x, y) => x - y).map(n => {
       const blocks = byDay[n];
-      blocks.forEach((bk, i) => { if (bk.kind === 'attraction' && i > 0) { const prev = blocks.slice(0, i).reverse().find(p => p.kind === 'attraction'); bk.hopKm = prev ? this.km(prev.row, bk.row) : null; } });
+      blocks.forEach((bk, i) => { if (bk.kind === 'attraction' && i > 0) { const prev = blocks.slice(0, i).reverse().find(p => p.kind === 'attraction'); bk.prevRow = prev ? prev.row : null; bk.hopKm = prev ? this.km(prev.row, bk.row) : null; } });
       return { n, date: start ? new Date(start.getTime() + (n - 1) * 86400000) : null, blocks };
     });
     if (!dest || !dayList.length) {
@@ -1264,7 +1308,8 @@ class Component extends DCLogic {
     const money = { ...MONEY0, ...(s.f.money || {}) };
     const setMoney = {};
     ['amount','currency','usdEtb','usdAed'].forEach(k => { setMoney[k] = (e) => this.save({ money:{ ...money, [k]:e.target.value } }); });
-    const out = { money, setMoney, bud:{ show:false },
+    const out = { money, setMoney, bud:{ show:false }, recs:[], hasRecs:false, noRecs:false,
+      routeNote: this._routes && Object.values(this._routes).some(Boolean) ? t.routeNote : '',
       showInterests:s.showInterests, interestsToggle: s.showInterests ? t.interestsHide : t.interestsShow,
       toggleInterests:() => this.setState({ showInterests:!s.showInterests }) };
     if (!TB || !s.plan) return out;
@@ -1281,6 +1326,20 @@ class Component extends DCLogic {
       .filter(p => p && String(p.bizCity || '').trim().toLowerCase() === city);
 
     // Cost the days the itinerary actually contains, not the days asked for.
+    // Published, non-demo businesses registered in the destination city,
+    // in categories a trip uses. Shown before anything generic.
+    const CAT_RANK = { hotels:1, restaurants:2, coffee:3, tourism:4, 'travel-services':5, transportation:6 };
+    // City names are typed by owners, so compare a normalised form
+    // ("Addis Abeba" = "Addis Ababa", "Abu Dhabi" = "Abudhabi").
+    const norm = (x) => String(x || '').toLowerCase().normalize('NFKD').replace(/[^a-z]/g, '').replace(/e/g, 'a');
+    const cityN = norm(dest.city || dest.name);
+    const recs = s.businesses.filter(b => b.data_source !== 'DEMO' && cityN && norm(b.city) === cityN)
+      .sort((a, b) => (CAT_RANK[a.category_slug] || 9) - (CAT_RANK[b.category_slug] || 9) || (a.verification_status === 'VERIFIED' ? -1 : 1))
+      .slice(0, 6).map(b => { const c = s.cats.find(x => x.slug === b.category_slug);
+        return { name:this.tx(b.id, 'name', b.name), category:c ? c.name : '', verified: b.verification_status === 'VERIFIED',
+          badge: b.verification_status === 'VERIFIED' ? t.badgeVerified : t.badgePending, href:'business-directory.dc.html?biz=' + b.id }; });
+    out.recs = recs; out.hasRecs = recs.length > 0; out.noRecs = recs.length === 0;
+    out.recsTitle = t.recsTitle.replace('{city}', dest.city || dest.name || '');
     const days = s.plan.days.length || s.f.days;
     const r = TB.estimate({ services, days, travellers:s.f.travellers, style:s.f.budget, money, startDate:s.f.startDate });
 
@@ -1392,7 +1451,9 @@ class Component extends DCLogic {
             kindLabel: t[st.label], kindColor:st.color, kindBg:st.bg,
             name: this.rowName(b.row),
             meta: bits.join(' · '),
-            hasHop: b.hopKm != null && b.hopKm >= 0.5, hop: b.hopKm != null ? t.kmFrom.replace('{km}', b.hopKm < 10 ? b.hopKm.toFixed(1) : Math.round(b.hopKm)) : '',
+            ...(() => { const rt = b.prevRow && this._routes && this._routes[b.prevRow.id + '>' + b.row.id];
+              if (rt) return { hasHop:true, hop: t.roadFrom.replace('{km}', rt.km < 10 ? rt.km.toFixed(1) : Math.round(rt.km)).replace('{min}', rt.min) };
+              return { hasHop: b.hopKm != null && b.hopKm >= 0.5, hop: b.hopKm != null ? t.kmFrom.replace('{km}', b.hopKm < 10 ? b.hopKm.toFixed(1) : Math.round(b.hopKm)) : '' }; })(),
             hasBusiness: !!biz,
             businessLink: t.viewListing,
             openBusiness: biz ? () => this.setState({ screen:'business', bizId:biz.id }) : null

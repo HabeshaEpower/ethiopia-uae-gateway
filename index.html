@@ -96,8 +96,8 @@ class Component extends DCLogic {
         .replace(/\.dc\.html$/i, '').trim().toLowerCase();
       const screen = ROUTES[file];
       if (!screen) return;
-      const frag = raw.split('#')[1];
-      try { history.replaceState(null, '', frag ? '#' + frag : location.pathname + location.search); } catch (x) {}
+      const frag = raw.split('#')[1], q = (raw.split('#')[0].split('?')[1] || '');
+      try { history.replaceState(null, '', location.pathname + (q ? '?' + q : '') + (frag ? '#' + frag : '')); } catch (x) {}
       if (screen !== this.state.screen) this.setState({ screen });
       window.scrollTo(0, 0);
       // Tell the screen which section was asked for, then scroll to it once it renders.

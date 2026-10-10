@@ -693,6 +693,7 @@ class Component extends DCLogic {
         ...b, tr: byBiz[b.id] || {}, services: services[b.id] || [], photos: photos[b.id] || [] }));
       const catRows = (cats.data || []).map(c => ({ ...c, tr: byCat[c.id] || {} }));
       this.setState({ allRows: rows, cats: catRows, loading:false });
+      try { const want = new URLSearchParams(location.search).get('biz'); if (want && rows.some(r => r.id === want)) this.setState({ screen:'profile', currentId:want }); } catch (e) {}
     } catch (e) {
       this.setState({ loading:false, loadError:true });
     }
